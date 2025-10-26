@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement Pourcentages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .niveau-card {
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .niveau-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .niveau-card.niveau1 {
+            border-color: #4ade80;
+            background: #f0fdf4;
+        }
+
+        .niveau-card.niveau2 {
+            border-color: #60a5fa;
+            background: #eff6ff;
+        }
+
+        .niveau-card.niveau3 {
+            border-color: #c084fc;
+            background: #faf5ff;
+        }
+
+        .niveau-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .niveau-card p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-info {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .score-display {
+            font-size: 20px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .question-type {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .type-vraifaux {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .type-qcm {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .type-calcul {
+            background: #e9d5ff;
+            color: #6b21a8;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .btn-vf {
+            width: 48%;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-vrai {
+            background: #4ade80;
+            color: white;
+        }
+
+        .btn-vrai:hover {
+            background: #22c55e;
+            transform: scale(1.05);
+        }
+
+        .btn-faux {
+            background: #f87171;
+            color: white;
+        }
+
+        .btn-faux:hover {
+            background: #ef4444;
+            transform: scale(1.05);
+        }
+
+        .vf-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .option-btn:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(5px);
+        }
+
+        .option-letter {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .calcul-input {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .calcul-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .progress-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .progress-step {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .progress-step.completed {
+            background: #4ade80;
+        }
+
+        .progress-step.current {
+            background: #667eea;
+        }
+
+        .result-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .result-score {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+
+        .result-percentage {
+            font-size: 1.8em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .detail-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 30px 0;
+            padding: 10px;
+        }
+
+        .detail-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+
+        .detail-item.correct {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+
+        .detail-item.incorrect {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .detail-question {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .detail-points {
+            float: right;
+            font-weight: bold;
+        }
+
+        .detail-explication {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .btn-quit {
+            background: #fee;
+            color: #c00;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-quit:hover {
+            background: #fdd;
+        }
+
+        .indice-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .indice-box strong {
+            color: #856404;
+        }
+
+        .tentative-badge {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .email-box {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .email-box h3 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        .email-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #90caf9;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .email-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .vf-container {
+                flex-direction: column;
+            }
+
+            .btn-vf {
+                width: 100%;
+            }
+
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Écran d'accueil -->
+        <div id="accueil" class="screen">
+            <div class="header">
+                <h1>🎯 Entraînement Pourcentages</h1>
+                <p>Seconde Professionnelle</p>
+            </div>
+
+            <div class="input-group">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" placeholder="Votre prénom">
+            </div>
+
+            <div class="input-group">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" placeholder="Votre nom">
+            </div>
+
+            <div class="email-box">
+                <h3>📧 Email du professeur (optionnel)</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">
+                    Si vous entrez l'email de votre professeur, vos résultats pourront lui être envoyés automatiquement.
+                </p>
+                <input type="email" id="emailProf" placeholder="email.professeur@exemple.fr">
+            </div>
+
+            <button class="btn btn-primary" onclick="commencer()">Commencer</button>
+        </div>
+
+        <!-- Écran de sélection du niveau -->
+        <div id="niveaux" class="screen hidden">
+            <div class="header">
+                <h1>Choisissez votre niveau</h1>
+                <p id="bienvenue"></p>
+            </div>
+
+            <div class="niveau-card niveau1" onclick="demarrerNiveau('niveau1')">
+                <h3>Niveau 1 - Débutant</h3>
+                <p>Calculs simples de pourcentages, conversions, situations de la vie courante</p>
+            </div>
+
+            <div class="niveau-card niveau2" onclick="demarrerNiveau('niveau2')">
+                <h3>Niveau 2 - Intermédiaire</h3>
+                <p>Coefficients multiplicateurs, augmentations et réductions, calcul de taux</p>
+            </div>
+
+            <div class="niveau-card niveau3" onclick="demarrerNiveau('niveau3')">
+                <h3>Niveau 3 - Avancé</h3>
+                <p>Évolutions successives, situations commerciales complexes, intérêts simples</p>
+            </div>
+
+            <button class="btn btn-secondary" onclick="retourAccueil()">Retour</button>
+        </div>
+
+        <!-- Écran de question -->
+        <div id="question" class="screen hidden">
+            <div class="question-header">
+                <div class="question-info">
+                    <span id="questionNum"></span> • <span id="niveauNom"></span>
+                </div>
+                <div class="score-display">Score: <span id="scoreActuel">0</span> pts</div>
+                <button class="btn-quit" onclick="quitterExercice()">✕ Quitter</button>
+            </div>
+
+            <div>
+                <span id="questionType" class="question-type"></span>
+                <span id="tentativeBadge" class="tentative-badge hidden">2ème essai</span>
+            </div>
+
+            <div id="indiceBox" class="indice-box hidden">
+                <strong>Indice :</strong> <span id="indiceText"></span>
+            </div>
+
+            <h2 class="question-text" id="questionText"></h2>
+
+            <div id="reponseContainer"></div>
+
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Écran de résultats -->
+        <div id="resultat" class="screen hidden">
+            <div class="result-card">
+                <h1>🏆 Félicitations <span id="resultatPrenom"></span> !</h1>
+                <p id="resultatNiveau"></p>
+                <div class="result-score" id="resultatScore"></div>
+                <div class="result-percentage" id="resultatPourcentage"></div>
+            </div>
+
+            <div id="emailStatus" class="email-info hidden">
+                <strong>📧 Email envoyé !</strong> Vos résultats ont été envoyés à votre professeur.
+            </div>
+
+            <h3 style="margin-bottom: 15px;">Détail de vos réponses</h3>
+            <div class="detail-container" id="detailReponses"></div>
+
+            <button class="btn btn-primary" onclick="recommencerNiveau()">Recommencer ce niveau</button>
+            <button class="btn btn-secondary" onclick="changerNiveau()">Changer de niveau</button>
+            <button class="btn btn-secondary" onclick="telechargerResultats()">📥 Télécharger mes résultats</button>
+            <button class="btn btn-secondary" onclick="retourAccueil()">Retour à l'accueil</button>
+        </div>
+    </div>
+
+    <script>
+        // Banque de questions (identique à la version précédente)
+        const questionsBank = {
+            niveau1: {
+                vraiFaux: [
+                    { question: "10% de 200€ = 20€", reponse: true, explication: "10% = 10/100 = 0,1 donc 0,1 × 200 = 20€" },
+                    { question: "50% représente la moitié", reponse: true, explication: "50% = 50/100 = 1/2" },
+                    { question: "25% de 100 = 50", reponse: false, explication: "25% de 100 = 25, pas 50" },
+                    { question: "Un article à 80€ avec une remise de 20% coûte 60€", reponse: false, explication: "20% de 80 = 16€, donc 80 - 16 = 64€" },
+                    { question: "100% représente le total", reponse: true, explication: "100% représente toujours la totalité" },
+                    { question: "Pour calculer 30% d'un prix, on multiplie par 30", reponse: false, explication: "Il faut multiplier par 0,30 (ou 30/100)" }
+                ],
+                qcm: [
+                    {
+                        question: "Un pull coûte 40€. Pendant les soldes, il a une réduction de 25%. Quel est le nouveau prix ?",
+                        options: ["10€", "25€", "30€", "35€"],
+                        reponse: 2,
+                        explication: "25% de 40€ = 10€. Prix soldé : 40 - 10 = 30€"
+                    },
+                    {
+                        question: "Dans une classe de 25 élèves, 20% sont absents. Combien d'élèves sont absents ?",
+                        options: ["4 élèves", "5 élèves", "10 élèves", "20 élèves"],
+                        reponse: 1,
+                        explication: "20% de 25 = 0,20 × 25 = 5 élèves"
+                    },
+                    {
+                        question: "Quelle fraction représente 50% ?",
+                        options: ["1/4", "1/2", "1/5", "1/50"],
+                        reponse: 1,
+                        explication: "50% = 50/100 = 1/2"
+                    },
+                    {
+                        question: "Un magasin propose 10% de réduction sur un article à 60€. Quel coefficient multiplicateur utiliser ?",
+                        options: ["0,10", "0,90", "1,10", "10"],
+                        reponse: 1,
+                        explication: "Réduction de 10% → on garde 90% → coefficient 0,90"
+                    }
+                ],
+                calculDirect: [
+                    { question: "Calculer 20% de 150€", reponse: 30, tolerance: 0, explication: "20% de 150 = 0,20 × 150 = 30€" },
+                    { question: "Calculer 10% de 80", reponse: 8, tolerance: 0, explication: "10% de 80 = 0,10 × 80 = 8" },
+                    { question: "Calculer 50% de 200", reponse: 100, tolerance: 0, explication: "50% de 200 = 0,50 × 200 = 100" },
+                    { question: "Calculer 25% de 120€", reponse: 30, tolerance: 0, explication: "25% de 120 = 0,25 × 120 = 30€" },
+                    { question: "Combien coûte un article à 50€ avec 10% de réduction ?", reponse: 45, tolerance: 0, explication: "10% de 50 = 5€, donc 50 - 5 = 45€" }
+                ]
+            },
+            niveau2: {
+                vraiFaux: [
+                    { question: "Une augmentation de 20% suivie d'une réduction de 20% ramène au prix initial", reponse: false, explication: "Non, on obtient 96% du prix initial (1,20 × 0,80 = 0,96)" },
+                    { question: "Un coefficient multiplicateur de 1,15 représente une augmentation de 15%", reponse: true, explication: "1,15 = 1 + 0,15 donc +15%" },
+                    { question: "15% de réduction correspond au coefficient 0,15", reponse: false, explication: "Réduction de 15% → coefficient 0,85 (on garde 85%)" },
+                    { question: "Un prix passe de 80€ à 100€, il a augmenté de 20%", reponse: false, explication: "Augmentation = (100-80)/80 = 0,25 = 25%" },
+                    { question: "30% d'un total de 250 élèves représente 75 élèves", reponse: true, explication: "0,30 × 250 = 75" }
+                ],
+                qcm: [
+                    {
+                        question: "Un article coûte 80€. Après une remise de 30%, quel est son nouveau prix ?",
+                        options: ["24€", "50€", "56€", "77€"],
+                        reponse: 2,
+                        explication: "30% de 80€ = 24€. Prix final : 80 - 24 = 56€"
+                    },
+                    {
+                        question: "Un salaire de 1500€ augmente de 8%. Quel est le nouveau salaire ?",
+                        options: ["1508€", "1580€", "1620€", "1800€"],
+                        reponse: 2,
+                        explication: "8% de 1500 = 120€. Nouveau salaire : 1620€"
+                    },
+                    {
+                        question: "Dans une entreprise, 35% des 200 employés sont des femmes. Combien y a-t-il d'hommes ?",
+                        options: ["35", "65", "70", "130"],
+                        reponse: 3,
+                        explication: "Femmes : 35% de 200 = 70. Hommes : 200 - 70 = 130"
+                    },
+                    {
+                        question: "Un prix passe de 50€ à 60€. De quel pourcentage a-t-il augmenté ?",
+                        options: ["10%", "17%", "20%", "83%"],
+                        reponse: 2,
+                        explication: "Augmentation : (60-50)/50 = 10/50 = 0,20 = 20%"
+                    }
+                ],
+                calculDirect: [
+                    { question: "Calculer 35% de 240", reponse: 84, tolerance: 0, explication: "35% de 240 = 0,35 × 240 = 84" },
+                    { question: "Un article à 150€ subit une réduction de 40%. Quel est le nouveau prix ?", reponse: 90, tolerance: 0, explication: "40% de 150 = 60€, donc 150 - 60 = 90€" },
+                    { question: "Calculer 15% de 300€", reponse: 45, tolerance: 0, explication: "15% de 300 = 0,15 × 300 = 45€" },
+                    { question: "Un prix de 200€ augmente de 12%. Quel est le nouveau prix ?", reponse: 224, tolerance: 0, explication: "12% de 200 = 24€, donc 200 + 24 = 224€" },
+                    { question: "Dans un lycée de 500 élèves, 45% sont en filière professionnelle. Combien ?", reponse: 225, tolerance: 0, explication: "45% de 500 = 0,45 × 500 = 225 élèves" }
+                ]
+            },
+            niveau3: {
+                vraiFaux: [
+                    { question: "Un coefficient multiplicateur de 0,75 représente une réduction de 25%", reponse: true, explication: "0,75 = 1 - 0,25, donc réduction de 25%" },
+                    { question: "Pour augmenter un prix de 15% puis le diminuer de 15%, on multiplie par 1,00", reponse: false, explication: "1,15 × 0,85 = 0,9775 ≠ 1,00" },
+                    { question: "Un prix qui triple a augmenté de 200%", reponse: true, explication: "Tripler = passer de 100% à 300% = +200%" },
+                    { question: "25% de 80% d'un nombre = 20% de ce nombre", reponse: true, explication: "0,25 × 0,80 = 0,20 = 20%" },
+                    { question: "Un article soldé à -30% puis -20% a une réduction totale de 50%", reponse: false, explication: "0,70 × 0,80 = 0,56, donc réduction de 44%" }
+                ],
+                qcm: [
+                    {
+                        question: "Un commerçant achète un article 120€ et veut une marge de 35%. À quel prix doit-il le vendre ?",
+                        options: ["42€", "155€", "162€", "182€"],
+                        reponse: 2,
+                        explication: "Marge = 35% de 120 = 42€. Prix de vente : 162€"
+                    },
+                    {
+                        question: "Un capital de 5000€ placé à 4% par an rapporte combien d'intérêts simples en 1 an ?",
+                        options: ["20€", "200€", "500€", "5200€"],
+                        reponse: 1,
+                        explication: "Intérêts = 4% de 5000 = 0,04 × 5000 = 200€"
+                    },
+                    {
+                        question: "Un article passe de 250€ à 200€. Quel est le taux de réduction ?",
+                        options: ["20%", "25%", "50%", "80%"],
+                        reponse: 0,
+                        explication: "Réduction : (250-200)/250 = 50/250 = 0,20 = 20%"
+                    },
+                    {
+                        question: "Une population de 8000 habitants augmente de 5% puis diminue de 3%. Quelle est la population finale ?",
+                        options: ["8000", "8148", "8160", "8200"],
+                        reponse: 1,
+                        explication: "8000 × 1,05 × 0,97 = 8148 habitants"
+                    }
+                ],
+                calculDirect: [
+                    { question: "Un article à 180€ subit deux remises successives de 20% puis 10%. Prix final ?", reponse: 129.6, tolerance: 0.5, explication: "180 × 0,80 × 0,90 = 129,60€" },
+                    { question: "Calculer le coefficient multiplicateur global pour une hausse de 12% suivie d'une baisse de 8%", reponse: 1.0304, tolerance: 0.001, explication: "1,12 × 0,92 = 1,0304" },
+                    { question: "Un prix passe de 80€ à 92€. Calculer le taux d'évolution en %", reponse: 15, tolerance: 0, explication: "(92-80)/80 = 12/80 = 0,15 = 15%" },
+                    { question: "Calculer 18% de TVA sur un prix HT de 250€", reponse: 45, tolerance: 0, explication: "18% de 250 = 0,18 × 250 = 45€" },
+                    { question: "Un capital de 3000€ placé à 3,5% d'intérêts simples par an pendant 1 an. Montant des intérêts ?", reponse: 105, tolerance: 0, explication: "3,5% de 3000 = 0,035 × 3000 = 105€" }
+                ]
+            }
+        };
+
+        // Variables globales
+        let etudiant = { nom: '', prenom: '', emailProf: '' };
+        let niveauActuel = null;
+        let questions = [];
+        let indexQuestion = 0;
+        let score = 0;
+        let reponses = [];
+        let tentativeActuelle = 0;
+        let resultatActuel = null;
+
+        // Fonctions utilitaires
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function afficherEcran(ecranId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(ecranId).classList.remove('hidden');
+        }
+
+        function commencer() {
+            const prenom = document.getElementById('prenom').value.trim();
+            const nom = document.getElementById('nom').value.trim();
+            const emailProf = document.getElementById('emailProf').value.trim();
+
+            if (!prenom || !nom) {
+                alert('Veuillez entrer votre nom et prénom');
+                return;
+            }
+
+            etudiant = { nom, prenom, emailProf };
+            document.getElementById('bienvenue').textContent = `Bienvenue ${prenom} !`;
+            afficherEcran('niveaux');
+        }
+
+        function genererQuestions(niveau) {
+            const bank = questionsBank[niveau];
+            const questions = [];
+
+            const vfIndexes = shuffleArray([...Array(bank.vraiFaux.length).keys()]).slice(0, 2);
+            vfIndexes.forEach(i => questions.push({ ...bank.vraiFaux[i], type: 'vraiFaux' }));
+
+            const qcmIndexes = shuffleArray([...Array(bank.qcm.length).keys()]).slice(0, 3);
+            qcmIndexes.forEach(i => questions.push({ ...bank.qcm[i], type: 'qcm' }));
+
+            const calcIndexes = shuffleArray([...Array(bank.calculDirect.length).keys()]).slice(0, 3);
+            calcIndexes.forEach(i => questions.push({ ...bank.calculDirect[i], type: 'calculDirect' }));
+
+            return shuffleArray(questions);
+        }
+
+        function demarrerNiveau(niveau) {
+            niveauActuel = niveau;
+            questions = genererQuestions(niveau);
+            indexQuestion = 0;
+            score = 0;
+            reponses = [];
+            tentativeActuelle = 0;
+
+            afficherEcran('question');
+            afficherQuestion();
+        }
+
+        function afficherQuestion() {
+            const q = questions[indexQuestion];
+            const niveauNom = niveauActuel === 'niveau1' ? 'Débutant' : niveauActuel === 'niveau2' ? 'Intermédiaire' : 'Avancé';
+
+            document.getElementById('questionNum').textContent = `Question ${indexQuestion + 1}/8`;
+            document.getElementById('niveauNom').textContent = niveauNom;
+            document.getElementById('scoreActuel').textContent = score;
+            document.getElementById('questionText').textContent = q.question;
+
+            const typeSpan = document.getElementById('questionType');
+            if (q.type === 'vraiFaux') {
+                typeSpan.textContent = 'VRAI / FAUX';
+                typeSpan.className = 'question-type type-vraifaux';
+            } else if (q.type === 'qcm') {
+                typeSpan.textContent = 'QCM';
+                typeSpan.className = 'question-type type-qcm';
+            } else {
+                typeSpan.textContent = 'CALCUL DIRECT';
+                typeSpan.className = 'question-type type-calcul';
+            }
+
+            const badge = document.getElementById('tentativeBadge');
+            if (q.type === 'calculDirect' && tentativeActuelle === 1) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const indiceBox = document.getElementById('indiceBox');
+            if (q.type === 'calculDirect' && tentativeActuelle === 1) {
+                document.getElementById('indiceText').textContent = q.explication;
+                indiceBox.classList.remove('hidden');
+            } else {
+                indiceBox.classList.add('hidden');
+            }
+
+            const container = document.getElementById('reponseContainer');
+            container.innerHTML = '';
+
+            if (q.type === 'vraiFaux') {
+                container.innerHTML = `
+                    <div class="vf-container">
+                        <button class="btn-vf btn-vrai" onclick="validerReponse(true)">VRAI</button>
+                        <button class="btn-vf btn-faux" onclick="validerReponse(false)">FAUX</button>
+                    </div>
+                `;
+            } else if (q.type === 'qcm') {
+                q.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + idx)}</span>${opt}`;
+                    btn.onclick = () => validerReponse(idx);
+                    container.appendChild(btn);
+                });
+            } else {
+                container.innerHTML = `
+                    <input type="number" step="0.01" class="calcul-input" id="calculInput" placeholder="Entrez votre réponse...">
+                    <button class="btn btn-primary" onclick="validerCalcul()">Valider ➔</button>
+                `;
+                setTimeout(() => {
+                    const input = document.getElementById('calculInput');
+                    input.focus();
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') validerCalcul();
+                    });
+                }, 100);
+            }
+
+            const progressBar = document.getElementById('progressBar');
+            progressBar.innerHTML = '';
+            questions.forEach((_, idx) => {
+                const step = document.createElement('div');
+                step.className = 'progress-step';
+                if (idx < indexQuestion) step.classList.add('completed');
+                if (idx === indexQuestion) step.classList.add('current');
+                progressBar.appendChild(step);
+            });
+        }
+
+        function validerCalcul() {
+            const input = document.getElementById('calculInput');
+            if (input.value) {
+                validerReponse(parseFloat(input.value));
+            }
+        }
+
+        function validerReponse(reponseUtilisateur) {
+            const q = questions[indexQuestion];
+            let correct = false;
+            let points = 0;
+
+            if (q.type === 'vraiFaux') {
+                correct = reponseUtilisateur === q.reponse;
+                points = correct ? 10 : 0;
+            } else if (q.type === 'qcm') {
+                correct = reponseUtilisateur === q.reponse;
+                points = correct ? 15 : 0;
+            } else if (q.type === 'calculDirect') {
+                const tolerance = q.tolerance || 0;
+                correct = Math.abs(reponseUtilisateur - q.reponse) <= tolerance;
+
+                if (correct) {
+                    points = tentativeActuelle === 0 ? 15 : 10;
+                } else if (tentativeActuelle === 0) {
+                    tentativeActuelle = 1;
+                    afficherQuestion();
+                    return;
+                } else {
+                    points = 0;
+                }
+            }
+
+            reponses.push({
+                question: q.question,
+                type: q.type,
+                correct,
+                points,
+                tentatives: q.type === 'calculDirect' ? tentativeActuelle + 1 : 1,
+                explication: q.explication
+            });
+
+            score += points;
+            tentativeActuelle = 0;
+
+            if (indexQuestion < questions.length - 1) {
+                indexQuestion++;
+                afficherQuestion();
+            } else {
+                terminerNiveau();
+            }
+        }
+
+        function terminerNiveau() {
+            const niveauNom = niveauActuel === 'niveau1' ? 'Débutant' : niveauActuel === 'niveau2' ? 'Intermédiaire' : 'Avancé';
+            
+            resultatActuel = {
+                nom: etudiant.nom,
+                prenom: etudiant.prenom,
+                niveau: niveauActuel,
+                niveauNom: niveauNom,
+                score: score,
+                maxScore: 110,
+                pourcentage: Math.round((score / 110) * 100),
+                reponses: reponses,
+                date: new Date().toLocaleString('fr-FR')
+            };
+
+            document.getElementById('resultatPrenom').textContent = etudiant.prenom;
+            document.getElementById('resultatNiveau').textContent = `Niveau ${niveauNom} terminé`;
+            document.getElementById('resultatScore').textContent = `${score} / 110`;
+            document.getElementById('resultatPourcentage').textContent = `${resultatActuel.pourcentage}%`;
+
+            const detailContainer = document.getElementById('detailReponses');
+            detailContainer.innerHTML = '';
+            reponses.forEach((rep, idx) => {
+                const div = document.createElement('div');
+                div.className = `detail-item ${rep.correct ? 'correct' : 'incorrect'}`;
+                div.innerHTML = `
+                    <div class="detail-question">
+                        Q${idx + 1}. ${rep.question}
+                        <span class="detail-points">${rep.points} pts</span>
+                    </div>
+                    <div style="color: ${rep.correct ? '#22c55e' : '#ef4444'}; font-weight: 600;">
+                        ${rep.correct ? '✓ Bonne réponse' : '✗ Mauvaise réponse'}
+                        ${rep.type === 'calculDirect' && rep.tentatives > 1 ? ' (2ème essai)' : ''}
+                    </div>
+                    <div class="detail-explication">💡 ${rep.explication}</div>
+                `;
+                detailContainer.appendChild(div);
+            });
+
+            // Envoyer par email si renseigné
+            if (etudiant.emailProf) {
+                envoyerEmail();
+            }
+
+            afficherEcran('resultat');
+        }
+
+        function envoyerEmail() {
+            // Construction du contenu email
+            const sujet = `Résultats - ${etudiant.prenom} ${etudiant.nom} - ${resultatActuel.niveauNom}`;
+            const corps = `
+Bonjour,
+
+Voici les résultats de ${etudiant.prenom} ${etudiant.nom} :
+
+Niveau : ${resultatActuel.niveauNom}
+Score : ${resultatActuel.score}/110 (${resultatActuel.pourcentage}%)
+Date : ${resultatActuel.date}
+
+Détail des réponses :
+${resultatActuel.reponses.map((r, i) => `
+Question ${i+1} : ${r.correct ? '✓' : '✗'} (${r.points} pts)
+${r.question}
+`).join('\n')}
+
+Cordialement
+            `.trim();
+
+            // Ouvrir le client email par défaut
+            const mailtoLink = `mailto:${etudiant.emailProf}?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(corps)}`;
+            window.location.href = mailtoLink;
+
+            // Afficher confirmation
+            document.getElementById('emailStatus').classList.remove('hidden');
+        }
+
+        function telechargerResultats() {
+            if (!resultatActuel) return;
+
+            const contenu = `RÉSULTATS - ENTRAÎNEMENT POURCENTAGES
+
+Élève : ${resultatActuel.prenom} ${resultatActuel.nom}
+Niveau : ${resultatActuel.niveauNom}
+Score : ${resultatActuel.score}/${resultatActuel.maxScore} (${resultatActuel.pourcentage}%)
+Date : ${resultatActuel.date}
+
+DÉTAIL DES RÉPONSES :
+${resultatActuel.reponses.map((r, i) => `
+Question ${i+1} : ${r.correct ? 'CORRECT ✓' : 'INCORRECT ✗'} (${r.points} points)
+${r.question}
+Explication : ${r.explication}
+${r.tentatives > 1 ? 'Nombre de tentatives : ' + r.tentatives : ''}
+`).join('\n---\n')}
+`;
+
+            const blob = new Blob([contenu], { type: 'text/plain;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `resultats_${resultatActuel.prenom}_${resultatActuel.nom}_${Date.now()}.txt`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            URL.revokeObjectURL(url);
+        }
+
+        function quitterExercice() {
+            if (confirm('Êtes-vous sûr de vouloir quitter ? Votre progression sera perdue.')) {
+                afficherEcran('niveaux');
+            }
+        }
+
+        function recommencerNiveau() {
+            demarrerNiveau(niveauActuel);
+        }
+
+        function changerNiveau() {
+            afficherEcran('niveaux');
+        }
+
+        function retourAccueil() {
+            afficherEcran('accueil');
+        }
+    </script>
+</body>
+</html>
